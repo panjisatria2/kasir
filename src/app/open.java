@@ -4,7 +4,6 @@
  */
 package app;
 
-import java.awt.Frame;
 import javax.swing.JFrame;
 
 /**
@@ -14,22 +13,22 @@ import javax.swing.JFrame;
 public class open {
 
     public static void DataUser(JFrame parent) {
-        parent.setVisible(false); // Menyembunyikan jendela sebelumnya
-        DataUser u = new DataUser(); // Membuat instance DataUser
-        u.setVisible(true); // Menampilkan DataUser
-        u.setExtendedState(JFrame.MAXIMIZED_BOTH); // Mengatur tampilan penuh
+        parent.setVisible(false); 
+        DataUser u = new DataUser(); 
+        u.setVisible(true); 
+        u.setExtendedState(JFrame.MAXIMIZED_BOTH); 
     }
 
     public static void DataProduk(JFrame parent) {
-        parent.setVisible(false); // Menyembunyikan jendela sebelumnya
-        DataProdukk p = new DataProdukk(); // Membuat instance DataUser
-        p.setVisible(true); // Menampilkan DataUser
-        p.setExtendedState(JFrame.MAXIMIZED_BOTH); // Mengatur tampilan penuh
+        parent.setVisible(false); 
+        DataProdukk p = new DataProdukk(); 
+        p.setVisible(true); 
+        p.setExtendedState(JFrame.MAXIMIZED_BOTH); 
     }
     public static void DataTransaksi(JFrame parent) {
-        parent.setVisible(false); // Menyembunyikan jendela sebelumnya
-        DataTransaksi t = new DataTransaksi(); // Membuat instance DataUser
-        t.setVisible(true); // Menampilkan DataUser
-        t.setExtendedState(JFrame.MAXIMIZED_BOTH); // Mengatur tampilan penuh
+        parent.setVisible(false); 
+        DataTransaksi t = new DataTransaksi(); 
+        t.setVisible(true); 
+        t.setExtendedState(JFrame.MAXIMIZED_BOTH); 
     }
 }

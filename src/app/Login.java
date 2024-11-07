@@ -8,13 +8,15 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 /**
  *
  * @author LENOVO
  */
 public class Login extends javax.swing.JFrame {
-
+    
     /**
      * Creates new form Login
      */
@@ -90,7 +92,7 @@ public class Login extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Impact", 0, 30)); // NOI18N
         jLabel4.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel4.setText("SELAMAT DATANG");
+        jLabel4.setText("SIGN IN");
         jPanel2.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 30, 330, -1));
 
         gridBagConstraints = new java.awt.GridBagConstraints();
@@ -164,59 +166,67 @@ public class Login extends javax.swing.JFrame {
     private javax.swing.JTextField username;
     // End of variables declaration//GEN-END:variables
 private void LoginNow() {
-   String user = username.getText();
-   String pass = new String(password.getPassword());
-        try {
-            Connection c = Koneksi.Gas();
-            Statement s = c.createStatement();
-            String sql = "SELECT * FROM `user` WHERE username='"+user+"' AND password='"+pass+"';";
-            ResultSet r = s.executeQuery(sql);
-            int status = 0;
-            int id;
-            String fn, us, ps, lv = null;
-            UserProfile up = new UserProfile();
-            while (r.next()) {
-                id = r.getInt("id");
-                fn = r.getString("nama");
-                us = r.getString("username");
-                ps = r.getString("password");
-                lv = r.getString("level");
-                up.setId(id);
-                up.setFullname(fn);
-                up.setUsername(user);
-                up.setPassword(pass);
-                up.setLevel(lv);
-
-                status++;
-            }
-
-            if(status > 0){
-                //Login berhasil
-                JOptionPane.showMessageDialog(this, "Sukses Login");
-                if(lv.equals("kasir")){
-                    this.setVisible(false);
-                    HalamanKasir K = new HalamanKasir(up);
-                    K.setVisible(true);
-                    K.setExtendedState(Frame.MAXIMIZED_BOTH);
-                }else if(lv.equals("admin")){
-                    this.setVisible(false);
-                    HalamanAdmin A = new HalamanAdmin(up);
-                    A.setVisible(true);
-                    A.setExtendedState(Frame.MAXIMIZED_BOTH);
-                }else if(lv.equals("owner")){
-                    this.setVisible(false);
-                    HalamanOwner O = new HalamanOwner(up);
-                    O.setVisible(true);
-                    O.setExtendedState(Frame.MAXIMIZED_BOTH);
-                }
-            }else {
-                
-                JOptionPane.showMessageDialog(this, "GAGAL Login\n"+"Username/Password diisi dengan benar");
-                password.requestFocus();
-            }
+    String user = username.getText();
+    String pass = new String(password.getPassword());
+    try {
+        Connection c = Koneksi.Gas();
+        Statement s = c.createStatement();
+        String sql = "SELECT * FROM `user` WHERE username='"+user+"' AND password='"+pass+"';";
+        ResultSet r = s.executeQuery(sql);
+        int status = 0;
+        int id;
+        String fn, us, ps, lv = null, path_gambar;
+        UserProfile up = new UserProfile();
+        while (r.next()) {
+            id = r.getInt("id");
+            fn = r.getString("nama");
+            us = r.getString("username"); 
+            ps = r.getString("password");
+            lv = r.getString("level");
+            path_gambar = r.getString("foto"); // Ambil path gambar
             
+            up.setId(id);
+            up.setFullname(fn);
+            up.setUsername(user);
+            up.setPassword(pass);
+            up.setLevel(lv);
+            up.setPath_gambar(path_gambar);
 
-        } catch (SQLException e) {
+            status++;
         }
+
+        if(status > 0){
+            JOptionPane.showMessageDialog(this, "Sukses Login");
+            if(lv.equals("kasir")){
+                this.setVisible(false);
+                HalamanKasir K = new HalamanKasir(up);
+                K.setVisible(true);
+                K.setExtendedState(Frame.MAXIMIZED_BOTH);
+            }else if(lv.equals("admin")){
+                this.setVisible(false);
+                HalamanAdmin A = new HalamanAdmin(up, up.getPath_gambar()); // Kirim path gambar
+                A.setVisible(true);
+                A.setExtendedState(Frame.MAXIMIZED_BOTH);
+            }else if(lv.equals("owner")){
+                this.setVisible(false);
+                HalamanOwner O = new HalamanOwner(up);
+                O.setVisible(true);
+                O.setExtendedState(Frame.MAXIMIZED_BOTH);
+            }
+            Date d = new Date();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy H:m:s z");
+            String tanggal = sdf.format(d);
+            
+            
+            Loging.logActivity("\n["+tanggal+"] Berhasil Login "); 
+            JOptionPane.showMessageDialog(this, "Data berhasil disimpan");
+        }else {
+            JOptionPane.showMessageDialog(this, "GAGAL Login\n"+"Username/Password diisi dengan benar");
+            password.requestFocus();
+        }
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(this, "Error: " + e.getMessage());
     }
+}
 }

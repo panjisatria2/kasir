@@ -5,6 +5,10 @@
 package app;
 
 import java.awt.Frame;
+import java.awt.Image;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -13,7 +17,9 @@ import javax.swing.JOptionPane;
  */
 public class HalamanAdmin extends javax.swing.JFrame {
 
-    UserProfile p;
+    UserProfile up;
+    private String path_gambar; // Pastikan variabel ini diinisialisasi
+
 
     /**
      * Creates new form HalamanAdmin
@@ -22,12 +28,36 @@ public class HalamanAdmin extends javax.swing.JFrame {
         initComponents();
     }
 
-    public HalamanAdmin(UserProfile P) {
+    public HalamanAdmin(UserProfile Up, String path_gambar) {
         initComponents();
 
-        this.p = P;
-        jLabel2.setText(p.getFullname() + "(" + p.getLevel() + ")");
+        this.up = Up;
+        this.path_gambar = path_gambar;
+        if (this.name_login != null) {
+            name_login.setText(up.getFullname());
+        }
 
+        if (this.role_login != null) {
+            role_login.setText("Sebagai  (" + up.getLevel() + ")");
+        }
+        setProfileImage();
+
+    }
+
+    private void setProfileImage() {
+        if (path_gambar != null && !path_gambar.isEmpty()) {
+            try {
+                Icon iconPath = new ImageIcon(path_gambar);
+                Image image = ((ImageIcon) iconPath).getImage();
+                Image scaledImage = image.getScaledInstance(100, 100, Image.SCALE_SMOOTH);
+                Icon scaledIcon = new ImageIcon(scaledImage);
+                jLabel1.setIcon(scaledIcon);
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, "Gagal memuat gambar.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Path gambar tidak valid.");
+        }
     }
 
     /**
@@ -41,9 +71,10 @@ public class HalamanAdmin extends javax.swing.JFrame {
         java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
+        name_login = new javax.swing.JLabel();
+        role_login = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
@@ -67,13 +98,7 @@ public class HalamanAdmin extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(153, 153, 153));
-
-        jLabel1.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 14)); // NOI18N
-        jLabel1.setText("SELAMAT DATANG");
-
-        jLabel2.setFont(new java.awt.Font("Copperplate Gothic Light", 1, 14)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(0, 255, 204));
-        jLabel2.setText(" ");
+        jPanel1.setPreferredSize(new java.awt.Dimension(830, 110));
 
         jButton1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jButton1.setText("LogOut");
@@ -83,28 +108,50 @@ public class HalamanAdmin extends javax.swing.JFrame {
             }
         });
 
+        name_login.setFont(new java.awt.Font("Copperplate Gothic Bold", 0, 16)); // NOI18N
+        name_login.setText("jLabel1");
+
+        role_login.setFont(new java.awt.Font("Copperplate Gothic Bold", 0, 14)); // NOI18N
+        role_login.setForeground(new java.awt.Color(255, 153, 255));
+        role_login.setText("jLabel1");
+
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/User.png"))); // NOI18N
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(34, 34, 34)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 336, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 158, Short.MAX_VALUE)
+                .addGap(15, 15, 15)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 110, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(8, 8, 8)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(name_login)
+                    .addComponent(role_login))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 474, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(39, 39, 39)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(39, 39, 39)
+                                .addComponent(jButton1))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGap(31, 31, 31)
+                                .addComponent(name_login)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(role_login)))
+                        .addGap(0, 31, Short.MAX_VALUE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addContainerGap())
         );
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
@@ -378,7 +425,6 @@ public class HalamanAdmin extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -399,6 +445,8 @@ public class HalamanAdmin extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JLabel name_login;
+    private javax.swing.JLabel role_login;
     // End of variables declaration//GEN-END:variables
 
 }

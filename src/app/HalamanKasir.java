@@ -12,18 +12,18 @@ import javax.swing.JOptionPane;
  * @author LENOVO
  */
 public class HalamanKasir extends javax.swing.JFrame {
-    UserProfile k;
+    UserProfile up;
     /**
      * Creates new form HalamanKasir
      */
     public HalamanKasir() {
         initComponents();
     }
-    public HalamanKasir(UserProfile up) {
+    public HalamanKasir(UserProfile Up) {
         initComponents();
         
-        this.k = up;
-        jLabel2.setText(k.getFullname() + "  (" + k.getLevel() + ")");
+        this.up = Up;
+        jLabel2.setText(up.getFullname() + "  (" + up.getLevel() + ")");
     }
     /**
      * This method is called from within the constructor to initialize the form.
@@ -70,7 +70,7 @@ public class HalamanKasir extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 269, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 245, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(36, 36, 36))
         );
@@ -103,6 +103,7 @@ public class HalamanKasir extends javax.swing.JFrame {
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed

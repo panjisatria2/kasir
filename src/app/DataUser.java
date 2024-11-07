@@ -17,12 +17,18 @@ import javax.swing.table.DefaultTableModel;
  */
 public class DataUser extends javax.swing.JFrame {
 
+    private static Object getValueAt(int n, int i) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    private int n;
+
     /**
      * Creates new form DataProduk
      */
     public DataUser() {
         initComponents();
-        
+
         viewData("");
     }
 
@@ -167,13 +173,13 @@ public class DataUser extends javax.swing.JFrame {
         jTable1.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "NO", "NAMA LENGKAP", "USERNAME", "PASSWORD", "LEVEL"
+                "ID", "NO", "NAMA LENGKAP", "USERNAME", "PASSWORD", "FOTO", "LEVEL"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
@@ -232,78 +238,90 @@ public class DataUser extends javax.swing.JFrame {
     }//GEN-LAST:event_keyyActionPerformed
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-       HalamanAdmin a = new HalamanAdmin();
-        this.setVisible(false); 
-        a.setVisible(true); 
+        HalamanAdmin a = new HalamanAdmin();
+        this.setVisible(false);
+        a.setVisible(true);
         a.setExtendedState(Frame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_jLabel2MouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         TambahData T = new TambahData(this, true);
-        T.setVisible(true); 
+        T.setVisible(true);
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
         int n = jTable1.getSelectedRow();
-        if(n != -1){
-            int id = Integer.parseInt(jTable1.getValueAt(n, 0).toString());
-            String FN = jTable1.getValueAt(n, 2).toString();
-            String UN = jTable1.getValueAt(n, 3).toString();
-            String PS = jTable1.getValueAt(n, 4).toString();
-            String LV = jTable1.getValueAt(n, 5).toString();
-            EditData U = new EditData(this, true);
-            U.setId(id);
-            U.setFN(FN);
-            U.setUS(UN);
-            U.setPS(PS);
-            U.setLV(LV);
-            U.setVisible(true); 
+        if (n != -1) {
+            try {
+                int id = Integer.parseInt(jTable1.getValueAt(n, 0).toString());
+                String FN = jTable1.getValueAt(n, 2).toString();
+                String US = jTable1.getValueAt(n, 3).toString();
+                String PS = jTable1.getValueAt(n, 4).toString();
+                String LV = jTable1.getValueAt(n, 5).toString();
+                String PP = jTable1.getValueAt(n, 6).toString();
+
+                EditData E = new EditData(new javax.swing.JFrame(), true);
+                E.setId(id);
+                E.setFN(FN);
+                E.setUS(US);
+                E.setPS(PS);
+                E.setLV(LV);
+                E.setPP(PP);
+                E.setVisible(true);
+
+                // Refresh data setelah edit
+                viewData("");
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(this, "ID tidak valid.");
+            } catch (NullPointerException e) {
+                JOptionPane.showMessageDialog(this, "Data tidak lengkap.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Pilih baris data yang akan diedit.");
         }
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-       int n = jTable1.getSelectedRow();
-        if(n != -1){
+        int n = jTable1.getSelectedRow();
+        if (n != -1) {
             int id = Integer.parseInt(jTable1.getValueAt(n, 0).toString());
 //            JOptionPane.showMessageDialog(this, id); 
-            
-            int pilihan = JOptionPane.showConfirmDialog(this, 
+
+            int pilihan = JOptionPane.showConfirmDialog(this,
                     "Apakah Anda yakin untuk menghapus data user ini?",
-                    "Hapus Data",JOptionPane.YES_NO_OPTION);
-            if(pilihan == 0){
+                    "Hapus Data", JOptionPane.YES_NO_OPTION);
+            if (pilihan == 0) {
                 //yes
-                String Q = "DELETE FROM user WHERE id="+id+" ";
+                String Q = "DELETE FROM user WHERE id=" + id + " ";
                 try {
                     Connection K = Koneksi.Gas();
                     Statement S = K.createStatement();
                     S.executeUpdate(Q);
-                    viewData(""); 
+                    viewData("");
                 } catch (Exception e) {
                 }
-            }else {
+            } else {
                 //no
             }
 
-            
-            
-        }else {
-            JOptionPane.showMessageDialog(this, "Anda belum memilih data"); 
-        
+        } else {
+            JOptionPane.showMessageDialog(this, "Anda belum memilih data");
+
         }
     }//GEN-LAST:event_jButton3ActionPerformed
 
     private void keyyKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_keyyKeyReleased
         String key = keyy.getText();
         String w = "WHERE "
-                + "nama LIKE '%"+key+"%' "
-                + "OR username LIKE '%"+key+"%' "
-                + "OR password LIKE '%"+key+"%' "
-                + "OR level LIKE '%"+key+"%'";
+                + "nama LIKE '%" + key + "%' "
+                + "OR username LIKE '%" + key + "%' "
+                + "OR password LIKE '%" + key + "%' "
+                + "OR level LIKE '%" + key + "%'";
         viewData(w);
     }//GEN-LAST:event_keyyKeyReleased
 
     private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
-        keyy.setText(""); 
+        keyy.setText("");
         viewData("");
     }//GEN-LAST:event_jButton4ActionPerformed
 
@@ -381,23 +399,32 @@ public static void viewData(String where) {
             m.getDataVector().removeAllElements();
             Connection K = Koneksi.Gas();
             Statement S = K.createStatement();
-            String Q = "SELECT * FROM user "+where;
+            String Q = "SELECT * FROM user " + where;
             ResultSet R = S.executeQuery(Q);
             int n = 1;
-            while (R.next()) {                 
+            while (R.next()) {
                 int id = R.getInt("id");
                 String fullname = R.getString("nama");
                 String username = R.getString("username");
                 String password = R.getString("password");
                 String level = R.getString("level");
-                Object[] data = {id, n, fullname, username, password, level};
-                m.addRow(data); 
+                String foto = R.getString("foto");
+                Object[] data = {id, n, fullname, username, password, foto, level};
+                m.addRow(data);
                 n++;
             }
-            
+
             jTable1.getColumnModel().getColumn(0).setMinWidth(0);
             jTable1.getColumnModel().getColumn(0).setMaxWidth(0);
-            
+
+            jTable1.getColumnModel().getColumn(1).setMinWidth(50);
+            jTable1.getColumnModel().getColumn(1).setMaxWidth(50);
+
+            jTable1.getColumnModel().getColumn(4).setMinWidth(200);
+            jTable1.getColumnModel().getColumn(4).setMaxWidth(200);
+            jTable1.getColumnModel().getColumn(5).setMinWidth(200);
+            jTable1.getColumnModel().getColumn(5).setMaxWidth(200);
+
         } catch (Exception e) {
             //error handling
         }

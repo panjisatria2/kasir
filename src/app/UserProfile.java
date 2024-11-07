@@ -6,6 +6,7 @@ public class UserProfile {
     private String username;
     private String password;
     private String level;
+    private String path_gambar;
 
     public int getId() {
         return id;
@@ -45,6 +46,14 @@ public class UserProfile {
 
     public void setLevel(String level) {
         this.level = level;
+    }
+
+    public String getPath_gambar() {
+        return path_gambar;
+    }
+
+    public void setPath_gambar(String path_gambar) {
+        this.path_gambar = path_gambar;
     }
 
 }
