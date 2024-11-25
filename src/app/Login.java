@@ -3,6 +3,8 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package app;
+import Kasir.HalamanKasir;
+import Admin.HalamanAdmin;
 import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -200,7 +202,7 @@ private void LoginNow() {
             JOptionPane.showMessageDialog(this, "Sukses Login");
             if(lv.equals("kasir")){
                 this.setVisible(false);
-                HalamanKasir K = new HalamanKasir(up);
+                HalamanKasir K = new HalamanKasir(up, up.getPath_gambar());
                 K.setVisible(true);
                 K.setExtendedState(Frame.MAXIMIZED_BOTH);
             }else if(lv.equals("admin")){

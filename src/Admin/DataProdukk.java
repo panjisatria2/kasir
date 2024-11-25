@@ -2,9 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package app;
+package Admin;
 
-import static app.DataUser.viewData;
+import app.Koneksi;
+import app.Loging;
+import app.UserProfile;
 import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.ResultSet;

@@ -2,8 +2,13 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
-package app;
+package Admin;
 
+import Admin.DataProdukk;
+import Admin.HalamanAdmin;
+import app.Koneksi;
+import app.Loging;
+import app.UserProfile;
 import java.awt.Frame;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -262,8 +267,8 @@ public class DataUser extends javax.swing.JFrame {
                 String FN = jTable1.getValueAt(n, 2).toString();
                 String US = jTable1.getValueAt(n, 3).toString();
                 String PS = jTable1.getValueAt(n, 4).toString();
-                String LV = jTable1.getValueAt(n, 5).toString();
-                String PP = jTable1.getValueAt(n, 6).toString();
+                String LV = jTable1.getValueAt(n, 6).toString();
+                String PP = jTable1.getValueAt(n, 5).toString();
 
                 EditData E = new EditData(new javax.swing.JFrame(), true);
                 E.setId(id);
@@ -441,7 +446,6 @@ public static void viewData(String where) {
             jTable1.getColumnModel().getColumn(5).setMaxWidth(200);
 
         } catch (Exception e) {
-            //error handling
         }
     }
 }

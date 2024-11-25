@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/AWTForms/Dialog.java to edit this template
  */
-package app;
+package Admin;
 
+import Admin.DataProdukk;
+import app.Koneksi;
+import app.Loging;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.sql.Connection;
@@ -41,6 +44,7 @@ public class EditProduk extends java.awt.Dialog {
         initComponents();
         viewCategory();
         viewSupplier();
+        setLocationRelativeTo(null);
     }
 
     /**

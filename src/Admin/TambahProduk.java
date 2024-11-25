@@ -1,9 +1,11 @@
-package app;
+package Admin;
 
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/AWTForms/Dialog.java to edit this template
  */
+import app.Koneksi;
+import app.Loging;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.sql.Connection;
@@ -11,7 +13,7 @@ import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import javax.swing.JFileChooser;
+import javax.swing.JComboBox;
 
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -31,8 +33,10 @@ public class TambahProduk extends java.awt.Dialog {
     public TambahProduk(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
-        viewCategory();
-        viewSupplier();
+        viewCategory("product_category", categorip);
+        viewCategory("supplier", suplier);
+        generateCode();
+        
     }
 
     /**
@@ -397,36 +401,53 @@ public class TambahProduk extends java.awt.Dialog {
     private javax.swing.JTextField stok;
     private javax.swing.JComboBox<String> suplier;
     // End of variables declaration//GEN-END:variables
-private void viewCategory() {
-        try {
-            Connection K = Koneksi.Gas();
+private void viewCategory(String tableName, JComboBox cmb){
+    try {
+        cmb.removeAllItems();
+        Connection K = Koneksi.Gas();
             Statement S = K.createStatement();
-            String Q = "SELECT id,name FROM product_category";
+            String Q = "SELECT * FROM "+tableName;
             ResultSet R = S.executeQuery(Q);
-            categorip.removeAllItems();
-            while (R.next()) {
-                int id = R.getInt("id");
+//            int n = 1;
+            while (R.next()) {                 
+                int id = R.getInt("id");                 	 	 	 	 	 	 	 	
                 String name = R.getString("name");
-                categorip.addItem(id + "-" + name);
+//                String desc = R.getString("description");
+                cmb.addItem(id+"-"+name);                 
             }
-        } catch (Exception e) {
-        }
+    } catch (SQLException e) {
+        System.err.println("ErrorCode: 1123"+e.getMessage());
     }
+}
 
-    private void viewSupplier() {
+    private void generateCode() {
         try {
             Connection K = Koneksi.Gas();
-            Statement S = K.createStatement();
-            String Q = "SELECT id,name FROM supplier";
-            ResultSet R = S.executeQuery(Q);
-            suplier.removeAllItems();
-            while (R.next()) {
-                int id = R.getInt("id");
-                String name = R.getString("name");
-                suplier.addItem(id + "-" + name);
+            String Q = "SELECT product_code AS kode FROM products ORDER BY id DESC LIMIT 1;";
+            Statement ST = K.createStatement();
+            ResultSet R = ST.executeQuery(Q);
+            String kode = "";
+            while (R.next()) {                
+                kode = R.getString("kode");
             }
+            
+            int P = Integer.parseInt(kode.substring(1));
+            String newCode = "";
+            if(P < 10){
+                newCode = "P0000"+(P+1);
+            }else if(P>9 && P < 100){
+                newCode = "P000"+(P+1);
+            }else if(P>99 && P < 1000){
+                newCode = "P00"+(P+1);
+            }else if(P>999 && P < 10000){
+                newCode = "P0"+(P+1);
+            }else if(P>9999 && P < 100000){
+                newCode = "P"+(P+1);}
+            kodep.setText(newCode); 
+            
         } catch (Exception e) {
         }
+    
     }
 
     private void number(KeyEvent evt) {

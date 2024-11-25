@@ -2,8 +2,11 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/AWTForms/Dialog.java to edit this template
  */
-package app;
+package Admin;
 
+import Admin.DataUser;
+import app.Koneksi;
+import app.Loging;
 import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
@@ -33,6 +36,7 @@ public class TambahData extends java.awt.Dialog {
     public TambahData(java.awt.Frame parent, boolean modal) {
         super(parent, modal);
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
