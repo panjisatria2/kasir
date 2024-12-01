@@ -10,8 +10,6 @@ import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import javax.swing.JOptionPane;
 /**
  *
@@ -66,19 +64,21 @@ public class Login extends javax.swing.JFrame {
                 usernameActionPerformed(evt);
             }
         });
-        jPanel2.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 320, 28));
+        jPanel2.add(username, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 320, 35));
 
         jLabel2.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jLabel2.setText("Password :");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 130, -1, 24));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 140, -1, 24));
 
         password.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
+        password.setMinimumSize(new java.awt.Dimension(60, 25));
+        password.setPreferredSize(new java.awt.Dimension(60, 25));
         password.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 passwordActionPerformed(evt);
             }
         });
-        jPanel2.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 320, 29));
+        jPanel2.add(password, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 170, 320, 35));
 
         jButton1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
         jButton1.setText("Login");

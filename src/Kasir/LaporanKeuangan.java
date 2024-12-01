@@ -4,28 +4,38 @@
  */
 package Kasir;
 
-import static Admin.DataUser.viewData;
+import app.Koneksi;
 import app.UserProfile;
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.awt.Frame;
+import java.sql.SQLException;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author LENOVO
  */
 public class LaporanKeuangan extends javax.swing.JFrame {
+
     String path_gambar;
     UserProfile pr;
+
     /**
      * Creates new form LaporanKeuangan
      */
     public LaporanKeuangan() {
         initComponents();
     }
-    public LaporanKeuangan(UserProfile Up,String path_gambar) {
+
+    public LaporanKeuangan(UserProfile Up, String path_gambar) {
         initComponents();
         this.pr = Up;
         this.path_gambar = path_gambar;
-        viewData("");
+        loadLaporanKeuangan(null);
     }
 
     /**
@@ -36,19 +46,16 @@ public class LaporanKeuangan extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
-        jLabel6 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -91,76 +98,58 @@ public class LaporanKeuangan extends javax.swing.JFrame {
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
         jPanel2.setBackground(new java.awt.Color(51, 51, 255));
-
-        jLabel3.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel3.setText("Pesanan Hari Ini :");
-
-        jLabel4.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel4.setText("Tanggal");
+        jPanel2.setLayout(new java.awt.GridBagLayout());
 
         jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
         jLabel5.setText("Tanggal :");
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.gridheight = 2;
+        gridBagConstraints.ipady = 13;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(25, 6, 0, 0);
+        jPanel2.add(jLabel5, gridBagConstraints);
 
-        jButton1.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jButton1.setText("Telusuri");
+        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                jTextField1KeyReleased(evt);
+            }
+        });
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 1;
+        gridBagConstraints.gridy = 0;
+        gridBagConstraints.ipadx = 166;
+        gridBagConstraints.ipady = 9;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.insets = new java.awt.Insets(25, 6, 0, 0);
+        jPanel2.add(jTextField1, gridBagConstraints);
 
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null},
+                {null, null, null, null, null, null}
             },
             new String [] {
-                "Kode Produk", "Nama Produk", "Jumlah", "Harga", "Status Transaksi"
+                "ID", "Tanggal", "Kode Produk", "Nama Produk", "Jumlah", "Harga"
             }
         ));
         jScrollPane1.setViewportView(jTable1);
 
-        jLabel6.setFont(new java.awt.Font("Century Gothic", 0, 14)); // NOI18N
-        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/Calendar.png"))); // NOI18N
-        jLabel6.setText(" ");
-
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 272, Short.MAX_VALUE)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 140, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel6)
-                .addGap(27, 27, 27)
-                .addComponent(jButton1)
-                .addGap(27, 27, 27))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1)
-                .addContainerGap())
-        );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jTextField1, javax.swing.GroupLayout.DEFAULT_SIZE, 31, Short.MAX_VALUE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 390, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        gridBagConstraints = new java.awt.GridBagConstraints();
+        gridBagConstraints.gridx = 0;
+        gridBagConstraints.gridy = 2;
+        gridBagConstraints.gridwidth = 3;
+        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
+        gridBagConstraints.ipadx = 832;
+        gridBagConstraints.ipady = 370;
+        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
+        gridBagConstraints.weightx = 1.0;
+        gridBagConstraints.weighty = 1.0;
+        gridBagConstraints.insets = new java.awt.Insets(20, 6, 6, 6);
+        jPanel2.add(jScrollPane1, gridBagConstraints);
 
         getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -168,12 +157,57 @@ public class LaporanKeuangan extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
-        HalamanKasir k = new HalamanKasir();
-        k.updateUser(this.pr,path_gambar); // Pastikan Anda menyimpan objek userprofile di tampilan user
+        HalamanKasir k = new HalamanKasir(this.pr, path_gambar);
         k.setVisible(true);
         this.dispose();
         k.setExtendedState(Frame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_jLabel2MouseClicked
+
+    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
+        String key = jTextField1.getText().trim(); // Ambil input dari jTextField1
+        String w = "";
+
+        if (!key.isEmpty()) { // Periksa apakah input tidak kosong
+            w = "WHERE Tanggal LIKE ? ";
+        }
+
+        try {
+            Connection con = Koneksi.Gas(); // Ambil koneksi dari kelas Koneksi
+            String query = "SELECT * FROM laporan_keuangan " + w;
+            PreparedStatement pstmt = con.prepareStatement(query);
+
+            if (!key.isEmpty()) {
+                pstmt.setString(1, "%" + key + "%"); // Set parameter dengan LIKE
+            }
+
+            ResultSet rs = pstmt.executeQuery();
+            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+            model.setRowCount(0); // Hapus data tabel sebelumnya
+
+            boolean hasResults = false;
+            while (rs.next()) {
+                hasResults = true;
+                String id = rs.getString("id");
+                String tanggalTransaksi = rs.getString("tanggal");
+                String kodeProduk = rs.getString("kode_produk");
+                String namaProduk = rs.getString("nama_produk");
+                String jumlah = rs.getString("jumlah");
+                String harga = rs.getString("harga");
+                String statusTransaksi = rs.getString("status_transaksi");
+
+                model.addRow(new Object[]{id, tanggalTransaksi, kodeProduk, namaProduk, jumlah, harga, statusTransaksi});
+            }
+
+            // Tampilkan tanggal di jLabel4
+            
+
+            rs.close();
+            pstmt.close();
+            con.close();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + e.getMessage());
+        }
+    }//GEN-LAST:event_jTextField1KeyReleased
 
     /**
      * @param args the command line arguments
@@ -203,25 +237,53 @@ public class LaporanKeuangan extends javax.swing.JFrame {
         //</editor-fold>
 
         /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new LaporanKeuangan().setVisible(true);
-            }
+        java.awt.EventQueue.invokeLater(() -> {
+            new LaporanKeuangan().setVisible(true);
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     // End of variables declaration//GEN-END:variables
+private void loadLaporanKeuangan(String tanggal) {
+        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
+        model.setRowCount(0); // Menghapus data sebelumnya di tabel
+
+        try {
+            Connection con = Koneksi.Gas();
+            Statement stmt = con.createStatement();
+
+            // Query untuk mengambil data berdasarkan tanggal (jika ada) atau semua data
+            String query;
+            if (tanggal != null && !tanggal.isEmpty()) {
+                query = "SELECT * FROM laporan_keuangan WHERE tanggal = '" + tanggal + "'";
+            } else {
+                query = "SELECT * FROM laporan_keuangan";
+            }
+
+            ResultSet rs = stmt.executeQuery(query);
+
+            while (rs.next()) {
+                String id = rs.getString("id");
+                String tanggalTransaksi = rs.getString("tanggal");
+                String kodeProduk = rs.getString("kode_produk");
+                String namaProduk = rs.getString("nama_produk");
+                String jumlah = rs.getString("jumlah");
+                String harga = rs.getString("harga");
+                String statusTransaksi = rs.getString("status_transaksi");
+
+                model.addRow(new Object[]{id, tanggalTransaksi, kodeProduk, namaProduk, jumlah, harga, statusTransaksi});
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Gagal memuat data laporan keuangan: " + e.getMessage());
+        }
+    }
+
 }
