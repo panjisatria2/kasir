@@ -4,16 +4,8 @@
  */
 package Kasir;
 
-import app.Koneksi;
 import app.UserProfile;
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
 import java.awt.Frame;
-import java.sql.SQLException;
-import javax.swing.JOptionPane;
-import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -35,7 +27,6 @@ public class LaporanKeuangan extends javax.swing.JFrame {
         initComponents();
         this.pr = Up;
         this.path_gambar = path_gambar;
-        loadLaporanKeuangan(null);
     }
 
     /**
@@ -46,14 +37,10 @@ public class LaporanKeuangan extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-        java.awt.GridBagConstraints gridBagConstraints;
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel5 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
@@ -97,61 +84,28 @@ public class LaporanKeuangan extends javax.swing.JFrame {
 
         getContentPane().add(jPanel1, java.awt.BorderLayout.PAGE_START);
 
-        jPanel2.setBackground(new java.awt.Color(51, 51, 255));
-        jPanel2.setLayout(new java.awt.GridBagLayout());
-
-        jLabel5.setFont(new java.awt.Font("Century Gothic", 1, 14)); // NOI18N
-        jLabel5.setText("Tanggal :");
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.gridheight = 2;
-        gridBagConstraints.ipady = 13;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(25, 6, 0, 0);
-        jPanel2.add(jLabel5, gridBagConstraints);
-
-        jTextField1.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyReleased(java.awt.event.KeyEvent evt) {
-                jTextField1KeyReleased(evt);
-            }
-        });
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 1;
-        gridBagConstraints.gridy = 0;
-        gridBagConstraints.ipadx = 166;
-        gridBagConstraints.ipady = 9;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.insets = new java.awt.Insets(25, 6, 0, 0);
-        jPanel2.add(jTextField1, gridBagConstraints);
-
         jTable1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null},
-                {null, null, null, null, null, null}
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null}
             },
             new String [] {
-                "ID", "Tanggal", "Kode Produk", "Nama Produk", "Jumlah", "Harga"
+                "ID", "Tanggal", "Nama", "Jumlah Transaksi", "Total Pendapatan", "Saldo Awal", "Saldo Akhir"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
-        gridBagConstraints = new java.awt.GridBagConstraints();
-        gridBagConstraints.gridx = 0;
-        gridBagConstraints.gridy = 2;
-        gridBagConstraints.gridwidth = 3;
-        gridBagConstraints.fill = java.awt.GridBagConstraints.BOTH;
-        gridBagConstraints.ipadx = 832;
-        gridBagConstraints.ipady = 370;
-        gridBagConstraints.anchor = java.awt.GridBagConstraints.NORTHWEST;
-        gridBagConstraints.weightx = 1.0;
-        gridBagConstraints.weighty = 1.0;
-        gridBagConstraints.insets = new java.awt.Insets(20, 6, 6, 6);
-        jPanel2.add(jScrollPane1, gridBagConstraints);
-
-        getContentPane().add(jPanel2, java.awt.BorderLayout.CENTER);
+        getContentPane().add(jScrollPane1, java.awt.BorderLayout.CENTER);
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -162,52 +116,6 @@ public class LaporanKeuangan extends javax.swing.JFrame {
         this.dispose();
         k.setExtendedState(Frame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_jLabel2MouseClicked
-
-    private void jTextField1KeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1KeyReleased
-        String key = jTextField1.getText().trim(); // Ambil input dari jTextField1
-        String w = "";
-
-        if (!key.isEmpty()) { // Periksa apakah input tidak kosong
-            w = "WHERE Tanggal LIKE ? ";
-        }
-
-        try {
-            Connection con = Koneksi.Gas(); // Ambil koneksi dari kelas Koneksi
-            String query = "SELECT * FROM laporan_keuangan " + w;
-            PreparedStatement pstmt = con.prepareStatement(query);
-
-            if (!key.isEmpty()) {
-                pstmt.setString(1, "%" + key + "%"); // Set parameter dengan LIKE
-            }
-
-            ResultSet rs = pstmt.executeQuery();
-            DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-            model.setRowCount(0); // Hapus data tabel sebelumnya
-
-            boolean hasResults = false;
-            while (rs.next()) {
-                hasResults = true;
-                String id = rs.getString("id");
-                String tanggalTransaksi = rs.getString("tanggal");
-                String kodeProduk = rs.getString("kode_produk");
-                String namaProduk = rs.getString("nama_produk");
-                String jumlah = rs.getString("jumlah");
-                String harga = rs.getString("harga");
-                String statusTransaksi = rs.getString("status_transaksi");
-
-                model.addRow(new Object[]{id, tanggalTransaksi, kodeProduk, namaProduk, jumlah, harga, statusTransaksi});
-            }
-
-            // Tampilkan tanggal di jLabel4
-            
-
-            rs.close();
-            pstmt.close();
-            con.close();
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Terjadi kesalahan: " + e.getMessage());
-        }
-    }//GEN-LAST:event_jTextField1KeyReleased
 
     /**
      * @param args the command line arguments
@@ -245,45 +153,8 @@ public class LaporanKeuangan extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel5;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private static javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
-private void loadLaporanKeuangan(String tanggal) {
-        DefaultTableModel model = (DefaultTableModel) jTable1.getModel();
-        model.setRowCount(0); // Menghapus data sebelumnya di tabel
-
-        try {
-            Connection con = Koneksi.Gas();
-            Statement stmt = con.createStatement();
-
-            // Query untuk mengambil data berdasarkan tanggal (jika ada) atau semua data
-            String query;
-            if (tanggal != null && !tanggal.isEmpty()) {
-                query = "SELECT * FROM laporan_keuangan WHERE tanggal = '" + tanggal + "'";
-            } else {
-                query = "SELECT * FROM laporan_keuangan";
-            }
-
-            ResultSet rs = stmt.executeQuery(query);
-
-            while (rs.next()) {
-                String id = rs.getString("id");
-                String tanggalTransaksi = rs.getString("tanggal");
-                String kodeProduk = rs.getString("kode_produk");
-                String namaProduk = rs.getString("nama_produk");
-                String jumlah = rs.getString("jumlah");
-                String harga = rs.getString("harga");
-                String statusTransaksi = rs.getString("status_transaksi");
-
-                model.addRow(new Object[]{id, tanggalTransaksi, kodeProduk, namaProduk, jumlah, harga, statusTransaksi});
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Gagal memuat data laporan keuangan: " + e.getMessage());
-        }
-    }
-
 }

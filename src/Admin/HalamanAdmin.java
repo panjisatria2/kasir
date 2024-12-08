@@ -268,6 +268,11 @@ public class HalamanAdmin extends javax.swing.JFrame {
 
         jPanel29.setBackground(new java.awt.Color(255, 153, 255));
         jPanel29.setPreferredSize(new java.awt.Dimension(100, 106));
+        jPanel29.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jPanel29MouseClicked(evt);
+            }
+        });
 
         jLabel52.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel52.setIcon(new javax.swing.ImageIcon(getClass().getResource("/img/_Pngtree_transaction_line_icon_3695215-removebg-preview.png"))); // NOI18N
@@ -397,7 +402,10 @@ public class HalamanAdmin extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jMenuItem3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem3ActionPerformed
-        
+        this.setVisible(false); 
+        DataTransaksi tt = new DataTransaksi(this.pr,path_gambar);
+        tt.setVisible(true); 
+        tt.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_jMenuItem3ActionPerformed
 
     private void jPanel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel3MouseClicked
@@ -417,6 +425,13 @@ public class HalamanAdmin extends javax.swing.JFrame {
         tp.setVisible(true); 
         tp.setExtendedState(JFrame.MAXIMIZED_BOTH);
     }//GEN-LAST:event_jPanel28MouseClicked
+
+    private void jPanel29MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel29MouseClicked
+        this.setVisible(false); 
+        DataTransaksi tt = new DataTransaksi(this.pr,path_gambar);
+        tt.setVisible(true); 
+        tt.setExtendedState(JFrame.MAXIMIZED_BOTH);
+    }//GEN-LAST:event_jPanel29MouseClicked
 
     /**
      * @param args the command line arguments
